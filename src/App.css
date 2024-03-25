@@ -5,7 +5,9 @@
   text-align: center;
 }
 
-
+.justified-text {
+  text-align: justify;
+}
 
 @keyframes logo-spin {
   from {
