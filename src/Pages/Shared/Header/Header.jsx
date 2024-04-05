@@ -1,12 +1,28 @@
 //import React from 'react';
+import { useContext, } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from 'react-router-dom';
+import {AuthContext} from '../../../Contexts/AuthProvider/AuthProvider'
+import Button from 'react-bootstrap/Button';
 
 
 const Header = () => {
+  const {user, LogOut} = useContext( AuthContext );
+
+  const handleLogOut = () => {
+    LogOut()
+    .then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      console.error(error)
+    });
+  }
+
+
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -29,6 +45,21 @@ const Header = () => {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
+        <Nav>
+          <Nav.Link>
+            {user ? 
+            <>
+            <span>{user.displayName}</span>
+            <Button onClick={handleLogOut} variant="primary">LogOut</Button>
+            </>
+            :
+            <>
+            <Link to='/login'>LogIn</Link>
+            <Link to='/register'>Register</Link>
+            </>
+          }
+          </Nav.Link>
+        </Nav>
       </Container>
     </Navbar>
     );
